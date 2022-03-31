@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery, usePaginationQuery } from "react-query";
 import Planet from "./Planet";
 import { useState } from "react";
 
@@ -11,7 +11,21 @@ const fetchPlanets = async ({ queryKey }) => {
 const Planets = () => {
   const [page, setPage] = useState(1);
 
-  const { data, status } = useQuery(["planets", page], fetchPlanets);
+  const { data, status, isPreviousData } = useQuery(
+    ["planets", page],
+    fetchPlanets,
+    {
+      keepPreviousData: true,
+    }
+  );
+
+  const nextPage = () => {
+    setPage((oldPage) =>
+      isPreviousData || !data.next ? oldPage : oldPage + 1
+    );
+  };
+
+  console.log(isPreviousData);
 
   return (
     <div>
@@ -22,17 +36,27 @@ const Planets = () => {
       {status === "loading" && <h3>Loading...</h3>}
 
       {status === "success" && (
-        <div>
+        <>
           <div className="page-buttons">
-            {[1, 2, 3, 4, 5, 6].map((index) => {
-              return <button onClick={() => setPage(index)}>{index}</button>;
+            <button
+              onClick={() =>
+                setPage((oldPage) => (oldPage > 1 ? oldPage - 1 : 1))
+              }
+              disabled={page === 1}
+            >
+              Previous page
+            </button>
+            <span>{page}</span>
+            <button onClick={nextPage} disabled={isPreviousData || !data.next}>
+              Next page
+            </button>
+          </div>
+          <div>
+            {data.results.map((planet) => {
+              return <Planet key={planet.name} planet={planet} />;
             })}
           </div>
-
-          {data.results.map((planet) => {
-            return <Planet key={planet.name} planet={planet} />;
-          })}
-        </div>
+        </>
       )}
     </div>
   );

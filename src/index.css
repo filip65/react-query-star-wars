@@ -52,7 +52,11 @@ button:hover {
 }
 
 .page-buttons button {
-  width: 2.5rem;
-  border-radius: 100%;
+  border-radius: 10px;
   font-size: 0.8rem;
+}
+
+.page-buttons button:disabled {
+  border-radius: 10px;
+  cursor: not-allowed;
 }
