@@ -1,9 +1,9 @@
-import { useQuery, usePaginationQuery } from "react-query";
+import { useQuery } from "react-query";
 import Planet from "./Planet";
 import { useState } from "react";
 
 const fetchPlanets = async ({ queryKey }) => {
-  const [_key, page] = queryKey;
+  const [_ = null, page] = queryKey;
   const response = await fetch(`http://swapi.dev/api/planets/?page=${page}`);
   return await response.json();
 };
