@@ -3,7 +3,8 @@ import Planet from "./Planet";
 import { useState } from "react";
 
 const fetchPlanets = async ({ queryKey }) => {
-  const [_ = null, page] = queryKey;
+  // eslint-disable-next-line no-unused-vars
+  const [_, page] = queryKey;
   const response = await fetch(`http://swapi.dev/api/planets/?page=${page}`);
   return await response.json();
 };
