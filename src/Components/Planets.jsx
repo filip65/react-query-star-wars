@@ -5,7 +5,7 @@ import { useState } from "react";
 const fetchPlanets = async ({ queryKey }) => {
   // eslint-disable-next-line no-unused-vars
   const [_, page] = queryKey;
-  const response = await fetch(`http://swapi.dev/api/planets/?page=${page}`);
+  const response = await fetch(`https://swapi.dev/api/planets/?page=${page}`);
   return await response.json();
 };
 
