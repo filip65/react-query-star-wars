@@ -20,13 +20,15 @@ const Planets = () => {
     }
   );
 
+  const prevPage = () => {
+    setPage((oldPage) => (oldPage > 1 ? oldPage - 1 : 1));
+  };
+
   const nextPage = () => {
     setPage((oldPage) =>
       isPreviousData || !data.next ? oldPage : oldPage + 1
     );
   };
-
-  console.log(isPreviousData);
 
   return (
     <div>
@@ -39,12 +41,7 @@ const Planets = () => {
       {status === "success" && (
         <>
           <div className="page-buttons">
-            <button
-              onClick={() =>
-                setPage((oldPage) => (oldPage > 1 ? oldPage - 1 : 1))
-              }
-              disabled={page === 1}
-            >
+            <button onClick={prevPage} disabled={page === 1}>
               Previous page
             </button>
             <span>{page}</span>
